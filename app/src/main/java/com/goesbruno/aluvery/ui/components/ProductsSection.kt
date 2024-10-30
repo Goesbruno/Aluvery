@@ -17,15 +17,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.goesbruno.aluvery.R
 import com.goesbruno.aluvery.model.Product
+import com.goesbruno.aluvery.sampleData.sampleProducts
 import java.math.BigDecimal
 
 @Composable
-fun ProductsSection() {
+fun ProductsSection(
+    title: String,
+    products: List<Product>
+) {
 
     Column {
 
         Text(
-            text = "Produtos",
+            text = title,
             Modifier.padding(
                 start = 16.dp,
                 end = 16.dp
@@ -44,27 +48,9 @@ fun ProductsSection() {
 
         ) {
             Spacer(Modifier)
-            ProductItem(
-                Product(
-                    name = "Hamburguer",
-                    price = BigDecimal("12.99"),
-                    image = R.drawable.burger
-                )
-            )
-            ProductItem(
-                Product(
-                    name = "Pizza",
-                    price = BigDecimal("17.99"),
-                    image = R.drawable.pizza
-                )
-            )
-            ProductItem(
-                Product(
-                    name = "Batata Frita",
-                    price = BigDecimal("7.99"),
-                    image = R.drawable.fries
-                )
-            )
+            products.forEach { product ->
+                ProductItem(product)
+            }
             Spacer(Modifier)
         }
     }
@@ -73,5 +59,7 @@ fun ProductsSection() {
 @Preview(showBackground = true)
 @Composable
 fun ProductsSectionPreview() {
-    ProductsSection()
+    ProductsSection("Promoções", sampleProducts)
+
 }
+
