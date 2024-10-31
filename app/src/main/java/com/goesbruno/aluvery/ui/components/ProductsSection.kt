@@ -22,10 +22,11 @@ import com.goesbruno.aluvery.ui.theme.AluveryTheme
 @Composable
 fun ProductsSection(
     title: String,
-    products: List<Product>
+    products: List<Product>,
+    modifier: Modifier = Modifier
 ) {
 
-    Column {
+    Column(modifier) {
 
         Text(
             text = title,

@@ -1,5 +1,6 @@
 package com.goesbruno.aluvery.sampleData
 
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.goesbruno.aluvery.model.Product
 import java.math.BigDecimal
 
@@ -46,13 +47,15 @@ val sampleProducts = listOf(
     Product(
         name = "Hamburguer",
         price = BigDecimal("12.99"),
-        image = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg"
+        image = "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg",
+        description = LoremIpsum(20).values.first()
     ),
 
     Product(
         name = "Pizza",
         price = BigDecimal("17.99"),
-        image = "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"
+        image = "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg",
+        description = LoremIpsum(25).values.first()
     ),
 
     Product(

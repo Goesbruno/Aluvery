@@ -38,9 +38,13 @@ import com.goesbruno.aluvery.ui.theme.AluveryTheme
 import java.math.BigDecimal
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(
+    product: Product,
+    modifier: Modifier = Modifier
+    ) {
     val imageSize = 100.dp
     Surface(
+        modifier = modifier,
         shadowElevation = 4.dp,
         shape = RoundedCornerShape(15.dp)
 
