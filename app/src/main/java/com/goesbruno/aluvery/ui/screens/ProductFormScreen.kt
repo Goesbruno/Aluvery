@@ -16,10 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,81 +29,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.goesbruno.aluvery.R
-import com.goesbruno.aluvery.model.Product
+import com.goesbruno.aluvery.ui.states.ProductFormScreenUiState
 import com.goesbruno.aluvery.ui.theme.AluveryTheme
-import java.math.BigDecimal
-
-
-class ProductFormScreenUiState(
-    val url: String = "",
-    val name: String = "",
-    val price: String = "",
-    val description:String = "",
-    val isShowPreview: Boolean = url.isNotBlank(),
-    val onUrlChange: (String) -> Unit = {},
-    val onNameChange: (String) -> Unit = {},
-    val onDescriptionChange: (String) -> Unit = {},
-    val onPriceChange: (String) -> Unit = {}
-)
+import com.goesbruno.aluvery.ui.viewmodels.ProductFormScreenViewModel
 
 
 @Composable
 fun ProductFormScreen(
-    onSaveClick: (Product) -> Unit = {}
+    viewModel: ProductFormScreenViewModel,
+    onSaveClick: () -> Unit = {}
 ) {
-    var url by remember {
-        mutableStateOf("")
-    }
-    var name by remember {
-        mutableStateOf("")
-    }
-    var price by remember {
-        mutableStateOf("")
-    }
-    var description by remember {
-        mutableStateOf("")
-    }
-    val regex = "^\\d*(\\.\\d{0,2})?$"
-
+    val state by viewModel.uiState.collectAsState()
     ProductFormScreen(
-        state = ProductFormScreenUiState(
-            url = url,
-            name = name,
-            price = price,
-            description = description,
-            onUrlChange = { newUrl ->
-                url = newUrl
-            },
-            onNameChange = {newName ->
-                name = newName
-            },
-            onPriceChange = {newPrice ->
-                if (newPrice.matches(Regex(regex))){
-                    price = newPrice
-                }
-            },
-            onDescriptionChange = {newDesc ->
-                description = newDesc
-            }
-        ),
+        state = state,
         onSaveClick = {
-            val convertedPrice = try {
-                BigDecimal(price)
-            } catch (exception: NumberFormatException) {
-                BigDecimal.ZERO
-            }
-            val product = Product(
-                name = name,
-                image = url,
-                price = convertedPrice,
-                description = description
-            )
-            onSaveClick(product)
+            viewModel.save()
+            onSaveClick()
         }
     )
-
 }
-
 
 
 @Composable
@@ -211,6 +153,7 @@ fun ProductFormScreenPreview() {
         }
     }
 }
+
 @Preview
 @Composable
 fun ProductFormScreenFilledPreview() {
